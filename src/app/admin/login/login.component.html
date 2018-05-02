@@ -1,3 +1,18 @@
-<p>
-  login works!
-</p>
+<mat-card class="login-form">
+  <h1>Prisijungimas</h1>
+  <form [formGroup]="loginForm" (ngSubmit)="signIn()">
+    <mat-form-field class="login-form__input">
+      <input matInput placeholder="El.paštas.." formControlName="email" type="text" required>
+      <div class="sm-text is-danger" *ngIf="formErrors.email">
+          {{formErrors.email}}
+        </div>
+    </mat-form-field>
+      <mat-form-field class="login-form__input">
+        <input matInput placeholder="Slaptažodis..." formControlName="password" type="password" required>
+        <div class="sm-text is-danger" *ngIf="formErrors.password">
+            {{formErrors.password}}
+          </div>
+      </mat-form-field>
+      <button mat-button [disabled]="!loginForm.valid" type="submit" name="button">Prisijungti</button>
+  </form>
+</mat-card>

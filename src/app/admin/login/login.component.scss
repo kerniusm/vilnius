@@ -1,0 +1,15 @@
+@import "~scss/breakpoints";
+
+
+.login-form {
+  width: 90%;
+  margin-top: 50px;
+  @include breakpoint(phablet) {
+    width: 350px;
+    margin: 0 auto;
+  }
+
+}
+.login-form__input {
+  width: 100%;
+}
