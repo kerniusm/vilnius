@@ -10,6 +10,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 // angular material
+<<<<<<< HEAD
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -17,6 +18,17 @@ import { MatNativeDateModule } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
+=======
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatCardModule} from '@angular/material/card';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+>>>>>>> d1bd7f26ce88c5164c0c822d752890b2b3340eea
 // app components
 import { AppComponent } from './app.component';
 import { ServicesComponent } from './admin/services/services.component';
@@ -56,6 +68,7 @@ registerLocaleData(localePt, 'lt-BR');
     AngularFireAuthModule,
     AngularFirestoreModule,
     BrowserAnimationsModule, // Material...
+<<<<<<< HEAD
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -63,6 +76,16 @@ registerLocaleData(localePt, 'lt-BR');
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule
+=======
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatCardModule,
+    MatStepperModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule
+>>>>>>> d1bd7f26ce88c5164c0c822d752890b2b3340eea
 
 
 
