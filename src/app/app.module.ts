@@ -89,6 +89,7 @@ registerLocaleData(localePt, 'lt-BR');
     MatPaginatorModule,
     MatSortModule,
     MatSnackBarModule,
+    MatSelectModule
   ],
   entryComponents:[NotificationsComponent],
   providers: [AuthService, AuthGuard, ClassificatorService, NotificationsComponent, MatDatepickerModule, MatNativeDateModule,
