@@ -75,17 +75,20 @@ export class LoginComponent implements OnInit {
       if (Object.prototype.hasOwnProperty.call(this.formErrors, field)) {
         this.formErrors[field] = '';
         const control = form.get(field);
-        if (control && control.dirty && !control.valid) {
+      if(form.pristine) {
+        this.formErrors[field] = "";
+      } else if (control && control.dirty && !control.valid) {
           const messages = this.validationMessage[field];
           if (control.errors) {
             for (const key in control.errors) {
               if (Object.prototype.hasOwnProperty.call(control.errors, key)) {
-                this.formErrors[field] += `${(messages as {[key: string]: string})[key]}` + '\n';
+                this.formErrors[field] = `${(messages as {[key: string]: string})[key]}` + '\n';
               }
             }
           }
         }
       }
+
     }
   }
 

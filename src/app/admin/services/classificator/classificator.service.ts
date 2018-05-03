@@ -8,10 +8,10 @@ import { ClassificatorData } from './classificator';
 @Injectable()
 export class ClassificatorService {
   private classificatorsCollection: AngularFirestoreCollection<ClassificatorData>;
-  classificators: Observable<ClassificatorData[]>;
+  classificators: Observable<any[]>;
   constructor(
     private afs: AngularFirestore) {
-    this.classificatorsCollection = afs.collection<ClassificatorData>('classificator');
+    this.classificatorsCollection = afs.collection<any>('classificator');
     this.classificators = this.classificatorsCollection.snapshotChanges().map(
       classificators => {
         return classificators.map( cl => {
@@ -27,12 +27,13 @@ export class ClassificatorService {
   showClassificators() {
     return this.classificators;
   }
-
-  addClassificator(classificator: ClassificatorData) {
+//  ClassificatorData interface edit !!! extend id
+  addClassificator(classificator) {
     this.classificatorsCollection.add(classificator);
   }
+
   editClassificator(id, data) {
-    this.afs.doc<any>('classificator/'+id).update(data);
+ return    this.afs.doc<any>('classificator/' + id).update(data)
   }
 
 }

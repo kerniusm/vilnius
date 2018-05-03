@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {CdkTableModule} from '@angular/cdk/table';
 
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
@@ -23,8 +24,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatTableModule} from '@angular/material/table';
-import {MatPaginatorModule, MatSortModule} from '@angular/material';
-
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 // app components
 import { AppComponent } from './app.component';
 import { ServicesComponent } from './admin/services/services.component';
@@ -32,6 +34,7 @@ import { LoginComponent } from './admin/login/login.component';
 import { ServiceDetailsComponent } from './admin/service-details/service-details.component';
 import { HomeComponent } from './home/home.component';
 import { ClassificatorComponent } from './admin/services/classificator/classificator.component';
+import { NotificationsComponent } from './core/notifications/notifications.component';
 
 // app guards
 import { AuthGuard } from './core/auth/auth.guard';
@@ -47,13 +50,15 @@ import { ClassificatorService } from './admin/services/classificator/classificat
     LoginComponent,
     ServiceDetailsComponent,
     HomeComponent,
-    ClassificatorComponent
+    ClassificatorComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    CdkTableModule,
     AngularFireModule.initializeApp(environment.firebase), // angularfire2...
     AngularFireAuthModule,
     AngularFirestoreModule,
@@ -69,8 +74,10 @@ import { ClassificatorService } from './admin/services/classificator/classificat
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSnackBarModule,
   ],
-  providers: [AuthService, AuthGuard, ClassificatorService],
+  entryComponents:[NotificationsComponent],
+  providers: [AuthService, AuthGuard, ClassificatorService, NotificationsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

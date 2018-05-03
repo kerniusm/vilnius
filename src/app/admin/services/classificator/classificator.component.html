@@ -1,33 +1,91 @@
+
 <div class="classificator-header">
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtravimas">
-  </mat-form-field>
-  <span>
+
+  <span (click)="addClassificatorToggle();">
     <mat-icon>add_box</mat-icon>Pridėti paslauga
   </span>
 </div>
+<div class="classificator-new mat-elevation-z6">
 
+  <mat-table *ngIf="newClassificator" [dataSource]="dataSourceBlank">
+
+      <ng-container matColumnDef="articile_code">
+        <mat-header-cell *matHeaderCellDef >Straipsnio kodas</mat-header-cell>
+        <mat-cell *matCellDef="let newrow">
+            <mat-form-field>
+            <input matInput type="text" [(ngModel)]="articile_code" value="{{newrow.articile_code}}">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="articile_title">
+        <mat-header-cell *matHeaderCellDef >PSDF biudžeto straipsnis</mat-header-cell>
+        <mat-cell *matCellDef="let newrow">
+            <mat-form-field>
+            <input matInput type="text" [(ngModel)]="articile_title" value="{{newrow.articile_title}}">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="group_code">
+        <mat-header-cell *matHeaderCellDef >Grupės kodas</mat-header-cell>
+        <mat-cell *matCellDef="let newrow">
+            <mat-form-field>
+            <input matInput type="text" [(ngModel)]="group_code" value="{{newrow.group_code}}">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="service_code">
+        <mat-header-cell *matHeaderCellDef >Paslaugos kodas</mat-header-cell>
+        <mat-cell *matCellDef="let newrow">
+            <mat-form-field>
+            <input matInput type="text" [(ngModel)]="service_code" value="{{newrow.service_code}}">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="service_group">
+        <mat-header-cell *matHeaderCellDef >Paslaugos grupė</mat-header-cell>
+        <mat-cell *matCellDef="let newrow">
+            <mat-form-field>
+            <input matInput type="text" [(ngModel)]="service_group" value="{{newrow.service_group}}">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="service_title">
+        <mat-header-cell *matHeaderCellDef >Paslaugos pavadinimas</mat-header-cell>
+        <mat-cell *matCellDef="let newrow">
+            <mat-form-field>
+            <input matInput type="text" [(ngModel)]="service_title" value="{{newrow.service_title}}">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef >Veiksmai</mat-header-cell>
+        <mat-cell *matCellDef="let newrow">
+              <span (click)="createClassificator();"><mat-icon >done</mat-icon>Išsaugoti</span>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumnNew"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumnNew;"
+      >
+      </mat-row>
+
+  </mat-table>
+  </div>
 <div class="classificator-container mat-elevation-z8">
-
+    <mat-form-field class="classificator-filter">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtravimas">
+      </mat-form-field>
   <mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef>Veiksmai</mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <span  *ngIf="!row.editable" (click)="editClassificatorToogle(row)"><mat-icon>mode_edit</mat-icon>Redaguoti</span>
-        <span *ngIf="row.editable" (click)="editClassificator(row.id)"><mat-icon >done</mat-icon>Išsaugoti</span>
-      </mat-cell>
-    </ng-container>
     <!--Articile code -->
     <ng-container matColumnDef="articile_code">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Straipsnio kodas</mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <span *ngIf="!row.editable">{{row.articile_code}}</span>
-        <span *ngIf="row.editable">
+        <span *ngIf="selectedRowIndex != row.id">{{row.articile_code}}</span>
+        <span *ngIf="selectedRowIndex == row.id">
           <mat-form-field>
           <input matInput type="text" [(ngModel)]="articile_code" value="{{row.articile_code}}">
         </mat-form-field>
         </span>
-
       </mat-cell>
     </ng-container>
 
@@ -35,8 +93,8 @@
     <ng-container matColumnDef="articile_title">
       <mat-header-cell *matHeaderCellDef mat-sort-header>PSDF biudžeto straipsnis </mat-header-cell>
       <mat-cell *matCellDef="let row">
-          <span *ngIf="!row.editable">{{row.articile_title}}</span>
-          <span *ngIf="row.editable">
+          <span *ngIf="selectedRowIndex != row.id">{{row.articile_title}}</span>
+          <span *ngIf="selectedRowIndex == row.id">
             <mat-form-field>
               <input matInput type="text" [(ngModel)]="articile_title" value="{{row.articile_title}}">
             </mat-form-field>
@@ -49,10 +107,10 @@
     <ng-container matColumnDef="group_code">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Grupės kodas </mat-header-cell>
       <mat-cell *matCellDef="let row">
-          <span *ngIf="!row.editable">{{row.group_code}}</span>
-          <span *ngIf="row.editable">
+          <span *ngIf="selectedRowIndex != row.id">{{row.group_code}}</span>
+          <span *ngIf="selectedRowIndex == row.id">
             <mat-form-field>
-            <input matInput type="number" [(ngModel)]="articile_title" value="{{row.group_code}}">
+            <input matInput type="number" [(ngModel)]="group_code" value="{{row.group_code}}">
           </mat-form-field>
           </span>
 
@@ -63,16 +121,16 @@
     <ng-container matColumnDef="service_group">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Paslaugų grupė </mat-header-cell>
       <mat-cell *matCellDef="let row" >
-          <span *ngIf="!row.editable">{{row.service_group}}</span>
-          <span *ngIf="row.editable"><mat-form-field><input matInput type="text" [(ngModel)]="service_group" value="{{row.service_group}}"></mat-form-field></span>
+          <span *ngIf="selectedRowIndex != row.id">{{row.service_group}}</span>
+          <span *ngIf="selectedRowIndex == row.id"><mat-form-field><input matInput type="text" [(ngModel)]="service_group" value="{{row.service_group}}"></mat-form-field></span>
        </mat-cell>
     </ng-container>
         <!-- Service code -->
         <ng-container matColumnDef="service_code">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Paslaugos kodas </mat-header-cell>
           <mat-cell *matCellDef="let row" >
-              <span *ngIf="!row.editable">{{row.service_code}}</span>
-              <span *ngIf="row.editable"><mat-form-field>
+              <span *ngIf="selectedRowIndex != row.id">{{row.service_code}}</span>
+              <span *ngIf="selectedRowIndex == row.id"><mat-form-field>
                 <input matInput type="number" [(ngModel)]="service_code" value="{{row.service_code}}">
               </mat-form-field>
               </span>
@@ -82,20 +140,30 @@
     <ng-container matColumnDef="service_title">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Paslaugos pavadinimas </mat-header-cell>
       <mat-cell *matCellDef="let row" >
-          <span *ngIf="!row.editable">{{row.service_title}}</span>
-          <span *ngIf="row.editable">
+          <span *ngIf="selectedRowIndex != row.id">{{row.service_title}}</span>
+          <span *ngIf="selectedRowIndex == row.id">
             <mat-form-field>
             <input matInput type="text" [(ngModel)]="service_title" [value]="row.service_title">
           </mat-form-field>
           </span>
       </mat-cell>
     </ng-container>
+    <!-- Actions -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>Veiksmai</mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span  *ngIf="selectedRowIndex != row.id" (click)="editClassificatorToogle(row)"><mat-icon>mode_edit</mat-icon>Redaguoti</span>
+        <span *ngIf="selectedRowIndex == row.id" (click)="editClassificator(row)"><mat-icon >done</mat-icon>Išsaugoti</span>
+      </mat-cell>
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;">
-
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+             [ngClass]="{'highlight': selectedRowIndex == row.id}"
+    >
     </mat-row>
   </mat-table>
+
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
