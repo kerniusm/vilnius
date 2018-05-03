@@ -1,0 +1,31 @@
+<div class="auth-form">
+  <form [formGroup]="userForm" (ngSubmit)="search()">
+  <div class=content>
+    <mat-form-field class="input1">
+        <mat-select placeholder="Pasirinkite savo lyti" formControlName="gender">
+          <mat-option *ngFor="let lyt of gender" [value]="lyt.value">
+            {{ lyt.viewValue }}
+          </mat-option>
+        </mat-select>
+        <div class="sm-text is-danger" *ngIf="formErrors.gender">
+            {{ formErrors.gender }}
+        </div>
+      </mat-form-field>
+
+    <mat-form-field class="input2">
+        <input matInput [matDatepicker]="picker" placeholder="Pasirikite data" formControlName="date" required>
+        <mat-datepicker-toggle matSuffix  [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker startView="multi-year" [startAt]="startDate"></mat-datepicker>
+        <div class="sm-text is-danger" *ngIf="formErrors.date">
+            {{ formErrors.date }}
+        </div>
+    </mat-form-field>
+
+  </div>
+
+
+  <div class="button-row">
+    <button mat-raised-button [disabled]="!userForm.valid" type="submit" color="primary">Tikrinti</button>
+  </div>
+</form>
+</div>
