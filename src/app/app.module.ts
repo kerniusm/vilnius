@@ -18,6 +18,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material';
 import {MatCardModule} from '@angular/material/card';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatButtonModule} from '@angular/material/button';
@@ -27,6 +28,9 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
+
+
 // app components
 import { AppComponent } from './app.component';
 import { ServicesComponent } from './admin/services/services.component';
@@ -35,13 +39,20 @@ import { ServiceDetailsComponent } from './admin/service-details/service-details
 import { HomeComponent } from './home/home.component';
 import { ClassificatorComponent } from './admin/services/classificator/classificator.component';
 import { NotificationsComponent } from './core/notifications/notifications.component';
-
+import { NavbarComponent } from './home/navbar/navbar.component';
+import { ContentComponent } from './home/content/content.component';
 // app guards
 import { AuthGuard } from './core/auth/auth.guard';
 
 // app sevices
 import { AuthService } from './core/auth/auth.service';
 import { ClassificatorService } from './admin/services/classificator/classificator.service';
+// locales
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/lt';
+
+registerLocaleData(localePt, 'lt-BR');
 
 @NgModule({
   declarations: [
@@ -50,6 +61,8 @@ import { ClassificatorService } from './admin/services/classificator/classificat
     LoginComponent,
     ServiceDetailsComponent,
     HomeComponent,
+    NavbarComponent,
+    ContentComponent,
     ClassificatorComponent,
     NotificationsComponent
   ],
@@ -66,6 +79,7 @@ import { ClassificatorService } from './admin/services/classificator/classificat
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatCardModule,
     MatStepperModule,
     MatButtonModule,
@@ -77,7 +91,9 @@ import { ClassificatorService } from './admin/services/classificator/classificat
     MatSnackBarModule,
   ],
   entryComponents:[NotificationsComponent],
-  providers: [AuthService, AuthGuard, ClassificatorService, NotificationsComponent],
+  providers: [AuthService, AuthGuard, ClassificatorService, NotificationsComponent, MatDatepickerModule, MatNativeDateModule,
+    //  { provide: MAT_DATE_LOCALE, useValue: 'lt-ts' }
+    { provide: LOCALE_ID, useValue: 'lt-BR' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
